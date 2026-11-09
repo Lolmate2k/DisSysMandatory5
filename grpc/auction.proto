@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = "handin5/grpc";
+package grpc;
+
+service Auction {
+    rpc Bid(Amount) returns(Ack);
+    rpc Result(Empty) returns(Outcome);
+}
+
+message Amount {
+    int64 dollars = 1;
+}
+
+message Ack {
+    string message = 1;
+}
+
+message Outcome {
+    string winner = 1;
+    int64 buyingPrice = 2;
+}
+
+message Empty {}
