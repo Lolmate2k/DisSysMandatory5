@@ -19,139 +19,431 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Auction_Bid_FullMethodName    = "/grpc.Auction/Bid"
-	Auction_Result_FullMethodName = "/grpc.Auction/Result"
+	RM_Bid_FullMethodName            = "/grpc.RM/Bid"
+	RM_Result_FullMethodName         = "/grpc.RM/Result"
+	RM_UpdateReplicas_FullMethodName = "/grpc.RM/UpdateReplicas"
+	RM_Ping_FullMethodName           = "/grpc.RM/Ping"
+	RM_Election_FullMethodName       = "/grpc.RM/Election"
 )
 
-// AuctionClient is the client API for Auction service.
+// RMClient is the client API for RM service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuctionClient interface {
+type RMClient interface {
 	Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption) (*Ack, error)
 	Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error)
+	UpdateReplicas(ctx context.Context, in *CurrentState, opts ...grpc.CallOption) (*Ack, error)
+	Ping(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
+	Election(ctx context.Context, in *ElectionMessage, opts ...grpc.CallOption) (*ElectionResult, error)
 }
 
-type auctionClient struct {
+type rMClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuctionClient(cc grpc.ClientConnInterface) AuctionClient {
-	return &auctionClient{cc}
+func NewRMClient(cc grpc.ClientConnInterface) RMClient {
+	return &rMClient{cc}
 }
 
-func (c *auctionClient) Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption) (*Ack, error) {
+func (c *rMClient) Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption) (*Ack, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Ack)
-	err := c.cc.Invoke(ctx, Auction_Bid_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RM_Bid_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *auctionClient) Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error) {
+func (c *rMClient) Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Outcome)
-	err := c.cc.Invoke(ctx, Auction_Result_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RM_Result_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuctionServer is the server API for Auction service.
-// All implementations must embed UnimplementedAuctionServer
-// for forward compatibility.
-type AuctionServer interface {
-	Bid(context.Context, *Amount) (*Ack, error)
-	Result(context.Context, *Empty) (*Outcome, error)
-	mustEmbedUnimplementedAuctionServer()
+func (c *rMClient) UpdateReplicas(ctx context.Context, in *CurrentState, opts ...grpc.CallOption) (*Ack, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Ack)
+	err := c.cc.Invoke(ctx, RM_UpdateReplicas_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedAuctionServer must be embedded to have
+func (c *rMClient) Ping(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, RM_Ping_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rMClient) Election(ctx context.Context, in *ElectionMessage, opts ...grpc.CallOption) (*ElectionResult, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ElectionResult)
+	err := c.cc.Invoke(ctx, RM_Election_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RMServer is the server API for RM service.
+// All implementations must embed UnimplementedRMServer
+// for forward compatibility.
+type RMServer interface {
+	Bid(context.Context, *Amount) (*Ack, error)
+	Result(context.Context, *Empty) (*Outcome, error)
+	UpdateReplicas(context.Context, *CurrentState) (*Ack, error)
+	Ping(context.Context, *Empty) (*Empty, error)
+	Election(context.Context, *ElectionMessage) (*ElectionResult, error)
+	mustEmbedUnimplementedRMServer()
+}
+
+// UnimplementedRMServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedAuctionServer struct{}
+type UnimplementedRMServer struct{}
 
-func (UnimplementedAuctionServer) Bid(context.Context, *Amount) (*Ack, error) {
+func (UnimplementedRMServer) Bid(context.Context, *Amount) (*Ack, error) {
 	return nil, status.Error(codes.Unimplemented, "method Bid not implemented")
 }
-func (UnimplementedAuctionServer) Result(context.Context, *Empty) (*Outcome, error) {
+func (UnimplementedRMServer) Result(context.Context, *Empty) (*Outcome, error) {
 	return nil, status.Error(codes.Unimplemented, "method Result not implemented")
 }
-func (UnimplementedAuctionServer) mustEmbedUnimplementedAuctionServer() {}
-func (UnimplementedAuctionServer) testEmbeddedByValue()                 {}
+func (UnimplementedRMServer) UpdateReplicas(context.Context, *CurrentState) (*Ack, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateReplicas not implemented")
+}
+func (UnimplementedRMServer) Ping(context.Context, *Empty) (*Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedRMServer) Election(context.Context, *ElectionMessage) (*ElectionResult, error) {
+	return nil, status.Error(codes.Unimplemented, "method Election not implemented")
+}
+func (UnimplementedRMServer) mustEmbedUnimplementedRMServer() {}
+func (UnimplementedRMServer) testEmbeddedByValue()            {}
 
-// UnsafeAuctionServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuctionServer will
+// UnsafeRMServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RMServer will
 // result in compilation errors.
-type UnsafeAuctionServer interface {
-	mustEmbedUnimplementedAuctionServer()
+type UnsafeRMServer interface {
+	mustEmbedUnimplementedRMServer()
 }
 
-func RegisterAuctionServer(s grpc.ServiceRegistrar, srv AuctionServer) {
-	// If the following call panics, it indicates UnimplementedAuctionServer was
+func RegisterRMServer(s grpc.ServiceRegistrar, srv RMServer) {
+	// If the following call panics, it indicates UnimplementedRMServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Auction_ServiceDesc, srv)
+	s.RegisterService(&RM_ServiceDesc, srv)
 }
 
-func _Auction_Bid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RM_Bid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Amount)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuctionServer).Bid(ctx, in)
+		return srv.(RMServer).Bid(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Auction_Bid_FullMethodName,
+		FullMethod: RM_Bid_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuctionServer).Bid(ctx, req.(*Amount))
+		return srv.(RMServer).Bid(ctx, req.(*Amount))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auction_Result_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RM_Result_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuctionServer).Result(ctx, in)
+		return srv.(RMServer).Result(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Auction_Result_FullMethodName,
+		FullMethod: RM_Result_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuctionServer).Result(ctx, req.(*Empty))
+		return srv.(RMServer).Result(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Auction_ServiceDesc is the grpc.ServiceDesc for Auction service.
+func _RM_UpdateReplicas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CurrentState)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RMServer).UpdateReplicas(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RM_UpdateReplicas_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RMServer).UpdateReplicas(ctx, req.(*CurrentState))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RM_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RMServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RM_Ping_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RMServer).Ping(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RM_Election_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ElectionMessage)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RMServer).Election(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RM_Election_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RMServer).Election(ctx, req.(*ElectionMessage))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RM_ServiceDesc is the grpc.ServiceDesc for RM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Auction_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.Auction",
-	HandlerType: (*AuctionServer)(nil),
+var RM_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "grpc.RM",
+	HandlerType: (*RMServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Bid",
-			Handler:    _Auction_Bid_Handler,
+			Handler:    _RM_Bid_Handler,
 		},
 		{
 			MethodName: "Result",
-			Handler:    _Auction_Result_Handler,
+			Handler:    _RM_Result_Handler,
+		},
+		{
+			MethodName: "UpdateReplicas",
+			Handler:    _RM_UpdateReplicas_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _RM_Ping_Handler,
+		},
+		{
+			MethodName: "Election",
+			Handler:    _RM_Election_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "grpc/auction.proto",
+}
+
+const (
+	FE_Bid_FullMethodName          = "/grpc.FE/Bid"
+	FE_Result_FullMethodName       = "/grpc.FE/Result"
+	FE_LeaderUpdate_FullMethodName = "/grpc.FE/LeaderUpdate"
+)
+
+// FEClient is the client API for FE service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type FEClient interface {
+	Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption) (*Ack, error)
+	Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error)
+	LeaderUpdate(ctx context.Context, in *ElectionResult, opts ...grpc.CallOption) (*Empty, error)
+}
+
+type fEClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewFEClient(cc grpc.ClientConnInterface) FEClient {
+	return &fEClient{cc}
+}
+
+func (c *fEClient) Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption) (*Ack, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Ack)
+	err := c.cc.Invoke(ctx, FE_Bid_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fEClient) Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Outcome)
+	err := c.cc.Invoke(ctx, FE_Result_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fEClient) LeaderUpdate(ctx context.Context, in *ElectionResult, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, FE_LeaderUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// FEServer is the server API for FE service.
+// All implementations must embed UnimplementedFEServer
+// for forward compatibility.
+type FEServer interface {
+	Bid(context.Context, *Amount) (*Ack, error)
+	Result(context.Context, *Empty) (*Outcome, error)
+	LeaderUpdate(context.Context, *ElectionResult) (*Empty, error)
+	mustEmbedUnimplementedFEServer()
+}
+
+// UnimplementedFEServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedFEServer struct{}
+
+func (UnimplementedFEServer) Bid(context.Context, *Amount) (*Ack, error) {
+	return nil, status.Error(codes.Unimplemented, "method Bid not implemented")
+}
+func (UnimplementedFEServer) Result(context.Context, *Empty) (*Outcome, error) {
+	return nil, status.Error(codes.Unimplemented, "method Result not implemented")
+}
+func (UnimplementedFEServer) LeaderUpdate(context.Context, *ElectionResult) (*Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method LeaderUpdate not implemented")
+}
+func (UnimplementedFEServer) mustEmbedUnimplementedFEServer() {}
+func (UnimplementedFEServer) testEmbeddedByValue()            {}
+
+// UnsafeFEServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to FEServer will
+// result in compilation errors.
+type UnsafeFEServer interface {
+	mustEmbedUnimplementedFEServer()
+}
+
+func RegisterFEServer(s grpc.ServiceRegistrar, srv FEServer) {
+	// If the following call panics, it indicates UnimplementedFEServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&FE_ServiceDesc, srv)
+}
+
+func _FE_Bid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amount)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FEServer).Bid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FE_Bid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FEServer).Bid(ctx, req.(*Amount))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FE_Result_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FEServer).Result(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FE_Result_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FEServer).Result(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FE_LeaderUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ElectionResult)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FEServer).LeaderUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FE_LeaderUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FEServer).LeaderUpdate(ctx, req.(*ElectionResult))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// FE_ServiceDesc is the grpc.ServiceDesc for FE service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var FE_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "grpc.FE",
+	HandlerType: (*FEServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Bid",
+			Handler:    _FE_Bid_Handler,
+		},
+		{
+			MethodName: "Result",
+			Handler:    _FE_Result_Handler,
+		},
+		{
+			MethodName: "LeaderUpdate",
+			Handler:    _FE_LeaderUpdate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -161,6 +161,154 @@ func (x *Outcome) GetBuyingPrice() int64 {
 	return 0
 }
 
+type CurrentState struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	HighestBid    int64                  `protobuf:"varint,1,opt,name=highestBid,proto3" json:"highestBid,omitempty"`
+	Bidder        string                 `protobuf:"bytes,2,opt,name=bidder,proto3" json:"bidder,omitempty"`
+	Closed        bool                   `protobuf:"varint,3,opt,name=closed,proto3" json:"closed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CurrentState) Reset() {
+	*x = CurrentState{}
+	mi := &file_grpc_auction_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CurrentState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CurrentState) ProtoMessage() {}
+
+func (x *CurrentState) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_auction_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CurrentState.ProtoReflect.Descriptor instead.
+func (*CurrentState) Descriptor() ([]byte, []int) {
+	return file_grpc_auction_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CurrentState) GetHighestBid() int64 {
+	if x != nil {
+		return x.HighestBid
+	}
+	return 0
+}
+
+func (x *CurrentState) GetBidder() string {
+	if x != nil {
+		return x.Bidder
+	}
+	return ""
+}
+
+func (x *CurrentState) GetClosed() bool {
+	if x != nil {
+		return x.Closed
+	}
+	return false
+}
+
+type ElectionMessage struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OwnIp         string                 `protobuf:"bytes,1,opt,name=OwnIp,proto3" json:"OwnIp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ElectionMessage) Reset() {
+	*x = ElectionMessage{}
+	mi := &file_grpc_auction_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ElectionMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ElectionMessage) ProtoMessage() {}
+
+func (x *ElectionMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_auction_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ElectionMessage.ProtoReflect.Descriptor instead.
+func (*ElectionMessage) Descriptor() ([]byte, []int) {
+	return file_grpc_auction_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ElectionMessage) GetOwnIp() string {
+	if x != nil {
+		return x.OwnIp
+	}
+	return ""
+}
+
+type ElectionResult struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	WinnerIp      string                 `protobuf:"bytes,1,opt,name=winnerIp,proto3" json:"winnerIp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ElectionResult) Reset() {
+	*x = ElectionResult{}
+	mi := &file_grpc_auction_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ElectionResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ElectionResult) ProtoMessage() {}
+
+func (x *ElectionResult) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_auction_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ElectionResult.ProtoReflect.Descriptor instead.
+func (*ElectionResult) Descriptor() ([]byte, []int) {
+	return file_grpc_auction_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ElectionResult) GetWinnerIp() string {
+	if x != nil {
+		return x.WinnerIp
+	}
+	return ""
+}
+
 type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -169,7 +317,7 @@ type Empty struct {
 
 func (x *Empty) Reset() {
 	*x = Empty{}
-	mi := &file_grpc_auction_proto_msgTypes[3]
+	mi := &file_grpc_auction_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -181,7 +329,7 @@ func (x *Empty) String() string {
 func (*Empty) ProtoMessage() {}
 
 func (x *Empty) ProtoReflect() protoreflect.Message {
-	mi := &file_grpc_auction_proto_msgTypes[3]
+	mi := &file_grpc_auction_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -194,7 +342,7 @@ func (x *Empty) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Empty.ProtoReflect.Descriptor instead.
 func (*Empty) Descriptor() ([]byte, []int) {
-	return file_grpc_auction_proto_rawDescGZIP(), []int{3}
+	return file_grpc_auction_proto_rawDescGZIP(), []int{6}
 }
 
 var File_grpc_auction_proto protoreflect.FileDescriptor
@@ -208,11 +356,28 @@ const file_grpc_auction_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"C\n" +
 	"\aOutcome\x12\x16\n" +
 	"\x06winner\x18\x01 \x01(\tR\x06winner\x12 \n" +
-	"\vbuyingPrice\x18\x02 \x01(\x03R\vbuyingPrice\"\a\n" +
-	"\x05Empty2O\n" +
-	"\aAuction\x12\x1e\n" +
+	"\vbuyingPrice\x18\x02 \x01(\x03R\vbuyingPrice\"^\n" +
+	"\fCurrentState\x12\x1e\n" +
+	"\n" +
+	"highestBid\x18\x01 \x01(\x03R\n" +
+	"highestBid\x12\x16\n" +
+	"\x06bidder\x18\x02 \x01(\tR\x06bidder\x12\x16\n" +
+	"\x06closed\x18\x03 \x01(\bR\x06closed\"'\n" +
+	"\x0fElectionMessage\x12\x14\n" +
+	"\x05OwnIp\x18\x01 \x01(\tR\x05OwnIp\",\n" +
+	"\x0eElectionResult\x12\x1a\n" +
+	"\bwinnerIp\x18\x01 \x01(\tR\bwinnerIp\"\a\n" +
+	"\x05Empty2\xd6\x01\n" +
+	"\x02RM\x12\x1e\n" +
 	"\x03Bid\x12\f.grpc.Amount\x1a\t.grpc.Ack\x12$\n" +
-	"\x06Result\x12\v.grpc.Empty\x1a\r.grpc.OutcomeB\x0eZ\fhandin5/grpcb\x06proto3"
+	"\x06Result\x12\v.grpc.Empty\x1a\r.grpc.Outcome\x12/\n" +
+	"\x0eUpdateReplicas\x12\x12.grpc.CurrentState\x1a\t.grpc.Ack\x12 \n" +
+	"\x04Ping\x12\v.grpc.Empty\x1a\v.grpc.Empty\x127\n" +
+	"\bElection\x12\x15.grpc.ElectionMessage\x1a\x14.grpc.ElectionResult2}\n" +
+	"\x02FE\x12\x1e\n" +
+	"\x03Bid\x12\f.grpc.Amount\x1a\t.grpc.Ack\x12$\n" +
+	"\x06Result\x12\v.grpc.Empty\x1a\r.grpc.Outcome\x121\n" +
+	"\fLeaderUpdate\x12\x14.grpc.ElectionResult\x1a\v.grpc.EmptyB\x0eZ\fhandin5/grpcb\x06proto3"
 
 var (
 	file_grpc_auction_proto_rawDescOnce sync.Once
@@ -226,20 +391,35 @@ func file_grpc_auction_proto_rawDescGZIP() []byte {
 	return file_grpc_auction_proto_rawDescData
 }
 
-var file_grpc_auction_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_grpc_auction_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_grpc_auction_proto_goTypes = []any{
-	(*Amount)(nil),  // 0: grpc.Amount
-	(*Ack)(nil),     // 1: grpc.Ack
-	(*Outcome)(nil), // 2: grpc.Outcome
-	(*Empty)(nil),   // 3: grpc.Empty
+	(*Amount)(nil),          // 0: grpc.Amount
+	(*Ack)(nil),             // 1: grpc.Ack
+	(*Outcome)(nil),         // 2: grpc.Outcome
+	(*CurrentState)(nil),    // 3: grpc.CurrentState
+	(*ElectionMessage)(nil), // 4: grpc.ElectionMessage
+	(*ElectionResult)(nil),  // 5: grpc.ElectionResult
+	(*Empty)(nil),           // 6: grpc.Empty
 }
 var file_grpc_auction_proto_depIdxs = []int32{
-	0, // 0: grpc.Auction.Bid:input_type -> grpc.Amount
-	3, // 1: grpc.Auction.Result:input_type -> grpc.Empty
-	1, // 2: grpc.Auction.Bid:output_type -> grpc.Ack
-	2, // 3: grpc.Auction.Result:output_type -> grpc.Outcome
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	0, // 0: grpc.RM.Bid:input_type -> grpc.Amount
+	6, // 1: grpc.RM.Result:input_type -> grpc.Empty
+	3, // 2: grpc.RM.UpdateReplicas:input_type -> grpc.CurrentState
+	6, // 3: grpc.RM.Ping:input_type -> grpc.Empty
+	4, // 4: grpc.RM.Election:input_type -> grpc.ElectionMessage
+	0, // 5: grpc.FE.Bid:input_type -> grpc.Amount
+	6, // 6: grpc.FE.Result:input_type -> grpc.Empty
+	5, // 7: grpc.FE.LeaderUpdate:input_type -> grpc.ElectionResult
+	1, // 8: grpc.RM.Bid:output_type -> grpc.Ack
+	2, // 9: grpc.RM.Result:output_type -> grpc.Outcome
+	1, // 10: grpc.RM.UpdateReplicas:output_type -> grpc.Ack
+	6, // 11: grpc.RM.Ping:output_type -> grpc.Empty
+	5, // 12: grpc.RM.Election:output_type -> grpc.ElectionResult
+	1, // 13: grpc.FE.Bid:output_type -> grpc.Ack
+	2, // 14: grpc.FE.Result:output_type -> grpc.Outcome
+	6, // 15: grpc.FE.LeaderUpdate:output_type -> grpc.Empty
+	8, // [8:16] is the sub-list for method output_type
+	0, // [0:8] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -256,9 +436,9 @@ func file_grpc_auction_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_grpc_auction_proto_rawDesc), len(file_grpc_auction_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_grpc_auction_proto_goTypes,
 		DependencyIndexes: file_grpc_auction_proto_depIdxs,

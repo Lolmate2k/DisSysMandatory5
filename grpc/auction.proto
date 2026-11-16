@@ -2,9 +2,19 @@ syntax = "proto3";
 option go_package = "handin5/grpc";
 package grpc;
 
-service Auction {
+service RM {
     rpc Bid(Amount) returns(Ack);
     rpc Result(Empty) returns(Outcome);
+    
+    rpc UpdateReplicas(CurrentState) returns(Ack);
+    rpc Ping(Empty) returns(Empty);
+    rpc Election(ElectionMessage) returns(ElectionResult);
+}
+
+service FE {
+    rpc Bid(Amount) returns(Ack);
+    rpc Result(Empty) returns(Outcome);
+    rpc LeaderUpdate(ElectionResult) returns(Empty);
 }
 
 message Amount {
@@ -18,6 +28,20 @@ message Ack {
 message Outcome {
     string winner = 1;
     int64 buyingPrice = 2;
+}
+
+message CurrentState {
+    int64 highestBid = 1;
+    string bidder = 2;
+    bool closed = 3;
+}
+
+message ElectionMessage {
+    string OwnIp = 1;
+}
+
+message ElectionResult {
+    string winnerIp = 1;
 }
 
 message Empty {}
