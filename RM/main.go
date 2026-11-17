@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"flag"
 	"fmt"
 	pb "handin5/grpc"
@@ -10,7 +11,6 @@ import (
 	"os"
 	"strings"
 	"sync"
-	"context"
 	"time"
 
 	"google.golang.org/grpc"
@@ -19,32 +19,32 @@ import (
 
 type BID struct {
 	bidder string
-	bid int64
+	bid    int64
 }
 
 type RM struct {
 	pb.UnimplementedRMServer
-	replicas map[string]pb.RMClient
+	replicas     map[string]pb.RMClient
 	deadReplicas map[string]pb.RMClient
 
-	ip string
-	id int64
-	mu sync.Mutex
-	lamport int64
+	ip         string
+	id         int64
+	mu         sync.Mutex
+	lamport    int64
 	highestBid BID
-	closed bool
+	closed     bool
 }
 
 func newRMServer(ip string, id int64) *RM {
 	return &RM{
-		replicas: make(map[string]pb.RMClient),
+		replicas:     make(map[string]pb.RMClient),
 		deadReplicas: make(map[string]pb.RMClient),
 
-		ip: ip,
-		id: id,
-		lamport: 0,
+		ip:         ip,
+		id:         id,
+		lamport:    0,
 		highestBid: BID{},
-		closed: true,
+		closed:     true,
 	}
 }
 
@@ -83,12 +83,9 @@ func main() {
 	}()
 	log.Printf("[Node %d] event=NODE_START addr=%s my_lamport=%d", n.id, n.ip, n.lamport)
 
-
 }
 
-
-
-func ParseAndLog() int64{
+func ParseAndLog() int64 {
 	RMid := flag.Int64("RMid", -1, "the id of the RM")
 	flag.Parse()
 	if *RMid <= -1 || *RMid >= 2 {
@@ -118,7 +115,7 @@ func FindFriendsAndSelf(RMid int64) (string, []string) {
 
 	count := int64(0)
 	ip := ""
-	
+
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		if line == "" {
@@ -141,16 +138,15 @@ func FindFriendsAndSelf(RMid int64) (string, []string) {
 	return ip, addrs
 }
 
-
-
-
 // GRPC Methods
 
 func (n *RM) Bid(ctx context.Context, pbBid *pb.Amount) (*pb.Ack, error) {
+	// Setting values for state
 	bid := pbBid.Dollars
 	lamport := pbBid.Lamport
 	bidder := pbBid.Bidder
 
+	// If the bidder sending a bid is currently the one with the highest bid
 	if bidder == n.highestBid.bidder {
 		var returnMessage = fmt.Sprintf("You currently have the highest bid at: %d", n.highestBid.bid)
 		return &pb.Ack{
@@ -158,6 +154,7 @@ func (n *RM) Bid(ctx context.Context, pbBid *pb.Amount) (*pb.Ack, error) {
 			Lamport: n.lamport,
 		}, nil
 	}
+	// If the sent bid is lower than the current highest one
 	if bid <= n.highestBid.bid {
 		var returnMessage = fmt.Sprintf("Your bid is lower than highest bid, which is: %d", n.highestBid.bid)
 		return &pb.Ack{
@@ -165,22 +162,25 @@ func (n *RM) Bid(ctx context.Context, pbBid *pb.Amount) (*pb.Ack, error) {
 			Lamport: n.lamport,
 		}, nil
 	}
-	
+
 	n.lamport = max(n.lamport, lamport) + 1
-	
+
+	//Log that the bid has been reciaved by the leader succesfully
 	log.Printf("[RM %d] event=BID_RECIEVED bid=%d bidder=%s", n.id, bid, bidder)
 
+	// Creates the state
 	state := &pb.CurrentState{
 		HighestBid: bid,
-		Bidder: bidder,
-		Closed: false,
-		Lamport: n.lamport,
+		Bidder:     bidder,
+		Closed:     false,
+		Lamport:    n.lamport,
 	}
 
+	//If a majority does not repond
 	if !n.ReplicateToMajority(state) {
 		return &pb.Ack{Message: "Your bid was not accepted beacause of an internal server failure", Lamport: n.lamport}, nil
 	}
-	
+
 	n.highestBid = BID{bidder: bidder, bid: bid}
 
 	return &pb.Ack{Message: "Successfully bidded", Lamport: n.lamport}, nil
@@ -188,18 +188,23 @@ func (n *RM) Bid(ctx context.Context, pbBid *pb.Amount) (*pb.Ack, error) {
 
 func (n *RM) Result(ctx context.Context, pbRead *pb.Read) (*pb.Outcome, error) {
 	n.lamport = max(pbRead.Lamport, n.lamport) + 1
-	
+
 	return &pb.Outcome{
-		Winner: n.highestBid.bidder,
+		Winner:      n.highestBid.bidder,
 		BuyingPrice: n.highestBid.bid,
-		Lamport: n.lamport,
-		Closed: n.closed,
+		Lamport:     n.lamport,
+		Closed:      n.closed,
 	}, nil
 }
 
 // Can only be called by leader
 func (n *RM) UpdateReplicas(ctx context.Context, in *pb.CurrentState) (*pb.Ack, error) {
+	bidAmount := in.HighestBid
+	bidPerson := in.Bidder
 
+	n.highestBid = BID{bidder: bidPerson, bid: bidAmount}
+
+	return &pb.Ack{Message: "[Replica] Successfully write current state", Lamport: n.lamport}, nil
 }
 
 func (n *RM) Ping(ctx context.Context, in *pb.Empty) (*pb.Empty, error) {
@@ -210,7 +215,7 @@ func (n *RM) Election(ctx context.Context, in *pb.ElectionMessage) (*pb.Election
 
 }
 
-func (n *RM) ReplicateToMajority(state *pb.CurrentState) bool{
+func (n *RM) ReplicateToMajority(state *pb.CurrentState) bool {
 	total := len(n.replicas) + 1
 	needed := total/2 + 1
 	acks := 1
@@ -218,9 +223,11 @@ func (n *RM) ReplicateToMajority(state *pb.CurrentState) bool{
 	results := make(chan bool, len(n.replicas))
 
 	for addr, client := range n.replicas {
+
 		go func(addr string, client pb.RMClient) {
 			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 			defer cancel()
+
 			_, err := client.UpdateReplicas(ctx, state)
 			if err != nil {
 				log.Printf("[RM %d] event=REPLICATE_FAILED peer=%s err=%v", n.id, addr, err)
@@ -245,7 +252,3 @@ func (n *RM) ReplicateToMajority(state *pb.CurrentState) bool{
 	}
 	return false
 }
-
-
-
-
