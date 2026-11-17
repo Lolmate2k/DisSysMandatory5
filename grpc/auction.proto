@@ -4,7 +4,7 @@ package grpc;
 
 service RM {
     rpc Bid(Amount) returns(Ack);
-    rpc Result(Empty) returns(Outcome);
+    rpc Result(Read) returns(Outcome);
     
     rpc UpdateReplicas(CurrentState) returns(Ack);
     rpc Ping(Empty) returns(Empty);
@@ -13,27 +13,37 @@ service RM {
 
 service FE {
     rpc Bid(Amount) returns(Ack);
-    rpc Result(Empty) returns(Outcome);
+    rpc Result(Read) returns(Outcome);
     rpc LeaderUpdate(ElectionResult) returns(Empty);
 }
 
 message Amount {
     int64 dollars = 1;
+    int64 lamport = 2;
+    string bidder = 3;
 }
 
 message Ack {
     string message = 1;
+    int64 lamport = 2;
+}
+
+message Read {
+    int64 lamport = 1;
 }
 
 message Outcome {
     string winner = 1;
     int64 buyingPrice = 2;
+    int64 lamport = 3;
+    bool closed = 4;
 }
 
 message CurrentState {
     int64 highestBid = 1;
     string bidder = 2;
     bool closed = 3;
+    int64 lamport = 4;
 }
 
 message ElectionMessage {

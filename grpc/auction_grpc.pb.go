@@ -31,7 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RMClient interface {
 	Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption) (*Ack, error)
-	Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error)
+	Result(ctx context.Context, in *Read, opts ...grpc.CallOption) (*Outcome, error)
 	UpdateReplicas(ctx context.Context, in *CurrentState, opts ...grpc.CallOption) (*Ack, error)
 	Ping(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
 	Election(ctx context.Context, in *ElectionMessage, opts ...grpc.CallOption) (*ElectionResult, error)
@@ -55,7 +55,7 @@ func (c *rMClient) Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption)
 	return out, nil
 }
 
-func (c *rMClient) Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error) {
+func (c *rMClient) Result(ctx context.Context, in *Read, opts ...grpc.CallOption) (*Outcome, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Outcome)
 	err := c.cc.Invoke(ctx, RM_Result_FullMethodName, in, out, cOpts...)
@@ -100,7 +100,7 @@ func (c *rMClient) Election(ctx context.Context, in *ElectionMessage, opts ...gr
 // for forward compatibility.
 type RMServer interface {
 	Bid(context.Context, *Amount) (*Ack, error)
-	Result(context.Context, *Empty) (*Outcome, error)
+	Result(context.Context, *Read) (*Outcome, error)
 	UpdateReplicas(context.Context, *CurrentState) (*Ack, error)
 	Ping(context.Context, *Empty) (*Empty, error)
 	Election(context.Context, *ElectionMessage) (*ElectionResult, error)
@@ -117,7 +117,7 @@ type UnimplementedRMServer struct{}
 func (UnimplementedRMServer) Bid(context.Context, *Amount) (*Ack, error) {
 	return nil, status.Error(codes.Unimplemented, "method Bid not implemented")
 }
-func (UnimplementedRMServer) Result(context.Context, *Empty) (*Outcome, error) {
+func (UnimplementedRMServer) Result(context.Context, *Read) (*Outcome, error) {
 	return nil, status.Error(codes.Unimplemented, "method Result not implemented")
 }
 func (UnimplementedRMServer) UpdateReplicas(context.Context, *CurrentState) (*Ack, error) {
@@ -169,7 +169,7 @@ func _RM_Bid_Handler(srv interface{}, ctx context.Context, dec func(interface{})
 }
 
 func _RM_Result_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(Read)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func _RM_Result_Handler(srv interface{}, ctx context.Context, dec func(interface
 		FullMethod: RM_Result_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RMServer).Result(ctx, req.(*Empty))
+		return srv.(RMServer).Result(ctx, req.(*Read))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -283,7 +283,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FEClient interface {
 	Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption) (*Ack, error)
-	Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error)
+	Result(ctx context.Context, in *Read, opts ...grpc.CallOption) (*Outcome, error)
 	LeaderUpdate(ctx context.Context, in *ElectionResult, opts ...grpc.CallOption) (*Empty, error)
 }
 
@@ -305,7 +305,7 @@ func (c *fEClient) Bid(ctx context.Context, in *Amount, opts ...grpc.CallOption)
 	return out, nil
 }
 
-func (c *fEClient) Result(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Outcome, error) {
+func (c *fEClient) Result(ctx context.Context, in *Read, opts ...grpc.CallOption) (*Outcome, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Outcome)
 	err := c.cc.Invoke(ctx, FE_Result_FullMethodName, in, out, cOpts...)
@@ -330,7 +330,7 @@ func (c *fEClient) LeaderUpdate(ctx context.Context, in *ElectionResult, opts ..
 // for forward compatibility.
 type FEServer interface {
 	Bid(context.Context, *Amount) (*Ack, error)
-	Result(context.Context, *Empty) (*Outcome, error)
+	Result(context.Context, *Read) (*Outcome, error)
 	LeaderUpdate(context.Context, *ElectionResult) (*Empty, error)
 	mustEmbedUnimplementedFEServer()
 }
@@ -345,7 +345,7 @@ type UnimplementedFEServer struct{}
 func (UnimplementedFEServer) Bid(context.Context, *Amount) (*Ack, error) {
 	return nil, status.Error(codes.Unimplemented, "method Bid not implemented")
 }
-func (UnimplementedFEServer) Result(context.Context, *Empty) (*Outcome, error) {
+func (UnimplementedFEServer) Result(context.Context, *Read) (*Outcome, error) {
 	return nil, status.Error(codes.Unimplemented, "method Result not implemented")
 }
 func (UnimplementedFEServer) LeaderUpdate(context.Context, *ElectionResult) (*Empty, error) {
@@ -391,7 +391,7 @@ func _FE_Bid_Handler(srv interface{}, ctx context.Context, dec func(interface{})
 }
 
 func _FE_Result_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(Read)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -403,7 +403,7 @@ func _FE_Result_Handler(srv interface{}, ctx context.Context, dec func(interface
 		FullMethod: FE_Result_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FEServer).Result(ctx, req.(*Empty))
+		return srv.(FEServer).Result(ctx, req.(*Read))
 	}
 	return interceptor(ctx, in, info, handler)
 }
