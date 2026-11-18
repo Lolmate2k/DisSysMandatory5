@@ -1,0 +1,23 @@
+2026/11/18 13:19:02 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000
+2026/11/18 13:19:38 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000
+2026/11/18 13:19:43 [Client Jacob] event=BID_SEND amount=10 lamport=1
+2026/11/18 13:19:43 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/18 13:19:48 [Client Jacob] event=BID_SEND amount=4 lamport=2
+2026/11/18 13:19:48 [Client Jacob] event=BID_REPLY msg="You currently have the highest bid at: 10" lamport=2
+2026/11/18 13:20:28 [Client Jacob] event=BID_SEND amount=13 lamport=3
+2026/11/18 13:20:28 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=3
+2026/11/18 13:20:45 [Client Jacob] event=BID_SEND amount=16 lamport=4
+2026/11/18 13:20:45 [Client Jacob] event=BID_REPLY msg="The auction is closed" lamport=4
+2026/11/18 13:21:51 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000
+2026/11/18 13:21:54 [Client Jacob] event=BID_SEND amount=100 lamport=1
+2026/11/18 13:21:54 [Client Jacob] event=BID_REPLY msg="The auction is closed" lamport=1
+2026/11/18 13:22:01 [Client Jacob] event=BID_SEND amount=101 lamport=2
+2026/11/18 13:22:01 [Client Jacob] event=BID_REPLY msg="The auction is closed" lamport=2
+2026/11/18 13:22:05 [Client Jacob] event=BID_SEND amount=101 lamport=3
+2026/11/18 13:22:05 [Client Jacob] event=BID_REPLY msg="The auction is closed" lamport=3
+2026/11/18 13:22:07 [Client Jacob] event=RESULT_SEND lamport=4
+2026/11/18 13:22:07 [Client Jacob] event=RESULT_REPLY winner=Jacob price=13 closed=true lamport=31
+2026/11/18 13:22:12 [Client Jacob] event=BID_SEND amount=101 lamport=32
+2026/11/18 13:22:12 [Client Jacob] event=BID_REPLY msg="The auction is closed" lamport=32
+2026/11/18 13:22:34 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000
+2026/11/18 13:22:56 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000

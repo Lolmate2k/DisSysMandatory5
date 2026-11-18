@@ -44,14 +44,17 @@ message CurrentState {
     string bidder = 2;
     bool closed = 3;
     int64 lamport = 4;
+    int64 endTime = 5;
 }
 
 message ElectionMessage {
-    string OwnIp = 1;
+    string candidateIp = 1;
+    int64 candidateId = 2;
 }
 
 message ElectionResult {
     string winnerIp = 1;
+    int64 winnerId = 2;
 }
 
 message Empty {}

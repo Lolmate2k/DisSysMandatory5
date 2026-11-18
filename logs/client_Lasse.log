@@ -1,0 +1,5 @@
+2026/11/18 13:20:21 [Client Lasse] event=CLIENT_START fe=%!s(int64=0) bank=15
+2026/11/18 13:20:24 [Client Lasse] event=BID_SEND amount=12 lamport=1
+2026/11/18 13:20:24 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/18 13:20:32 [Client Lasse] event=BID_SEND amount=12 lamport=2
+2026/11/18 13:20:32 [Client Lasse] event=BID_REPLY msg="Your bid is lower than highest bid, which is: 13" lamport=2

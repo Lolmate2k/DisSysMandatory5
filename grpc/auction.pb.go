@@ -251,6 +251,7 @@ type CurrentState struct {
 	Bidder        string                 `protobuf:"bytes,2,opt,name=bidder,proto3" json:"bidder,omitempty"`
 	Closed        bool                   `protobuf:"varint,3,opt,name=closed,proto3" json:"closed,omitempty"`
 	Lamport       int64                  `protobuf:"varint,4,opt,name=lamport,proto3" json:"lamport,omitempty"`
+	EndTime       int64                  `protobuf:"varint,5,opt,name=endTime,proto3" json:"endTime,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -313,9 +314,17 @@ func (x *CurrentState) GetLamport() int64 {
 	return 0
 }
 
+func (x *CurrentState) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
 type ElectionMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OwnIp         string                 `protobuf:"bytes,1,opt,name=OwnIp,proto3" json:"OwnIp,omitempty"`
+	CandidateIp   string                 `protobuf:"bytes,1,opt,name=candidateIp,proto3" json:"candidateIp,omitempty"`
+	CandidateId   int64                  `protobuf:"varint,2,opt,name=candidateId,proto3" json:"candidateId,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -350,16 +359,24 @@ func (*ElectionMessage) Descriptor() ([]byte, []int) {
 	return file_grpc_auction_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ElectionMessage) GetOwnIp() string {
+func (x *ElectionMessage) GetCandidateIp() string {
 	if x != nil {
-		return x.OwnIp
+		return x.CandidateIp
 	}
 	return ""
+}
+
+func (x *ElectionMessage) GetCandidateId() int64 {
+	if x != nil {
+		return x.CandidateId
+	}
+	return 0
 }
 
 type ElectionResult struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	WinnerIp      string                 `protobuf:"bytes,1,opt,name=winnerIp,proto3" json:"winnerIp,omitempty"`
+	WinnerId      int64                  `protobuf:"varint,2,opt,name=winnerId,proto3" json:"winnerId,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -399,6 +416,13 @@ func (x *ElectionResult) GetWinnerIp() string {
 		return x.WinnerIp
 	}
 	return ""
+}
+
+func (x *ElectionResult) GetWinnerId() int64 {
+	if x != nil {
+		return x.WinnerId
+	}
+	return 0
 }
 
 type Empty struct {
@@ -455,18 +479,21 @@ const file_grpc_auction_proto_rawDesc = "" +
 	"\x06winner\x18\x01 \x01(\tR\x06winner\x12 \n" +
 	"\vbuyingPrice\x18\x02 \x01(\x03R\vbuyingPrice\x12\x18\n" +
 	"\alamport\x18\x03 \x01(\x03R\alamport\x12\x16\n" +
-	"\x06closed\x18\x04 \x01(\bR\x06closed\"x\n" +
+	"\x06closed\x18\x04 \x01(\bR\x06closed\"\x92\x01\n" +
 	"\fCurrentState\x12\x1e\n" +
 	"\n" +
 	"highestBid\x18\x01 \x01(\x03R\n" +
 	"highestBid\x12\x16\n" +
 	"\x06bidder\x18\x02 \x01(\tR\x06bidder\x12\x16\n" +
 	"\x06closed\x18\x03 \x01(\bR\x06closed\x12\x18\n" +
-	"\alamport\x18\x04 \x01(\x03R\alamport\"'\n" +
-	"\x0fElectionMessage\x12\x14\n" +
-	"\x05OwnIp\x18\x01 \x01(\tR\x05OwnIp\",\n" +
+	"\alamport\x18\x04 \x01(\x03R\alamport\x12\x18\n" +
+	"\aendTime\x18\x05 \x01(\x03R\aendTime\"U\n" +
+	"\x0fElectionMessage\x12 \n" +
+	"\vcandidateIp\x18\x01 \x01(\tR\vcandidateIp\x12 \n" +
+	"\vcandidateId\x18\x02 \x01(\x03R\vcandidateId\"H\n" +
 	"\x0eElectionResult\x12\x1a\n" +
-	"\bwinnerIp\x18\x01 \x01(\tR\bwinnerIp\"\a\n" +
+	"\bwinnerIp\x18\x01 \x01(\tR\bwinnerIp\x12\x1a\n" +
+	"\bwinnerId\x18\x02 \x01(\x03R\bwinnerId\"\a\n" +
 	"\x05Empty2\xd5\x01\n" +
 	"\x02RM\x12\x1e\n" +
 	"\x03Bid\x12\f.grpc.Amount\x1a\t.grpc.Ack\x12#\n" +

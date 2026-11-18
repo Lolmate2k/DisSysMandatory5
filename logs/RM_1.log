@@ -1,0 +1,47 @@
+2026/11/18 13:18:33 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/18 13:18:36 [RM 1] event=LEADER_TIMEOUT
+2026/11/18 13:18:36 [RM 1] event=ELECTION_STARTED
+2026/11/18 13:18:36 [RM 1] event=ELECTION_WON
+2026/11/18 13:18:36 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:18:36 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:18:37 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:19:12 [RM 1] event=REPLICA_DEAD peer=127.0.0.1:8008
+2026/11/18 13:19:33 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/18 13:19:34 [RM 1] event=ELECTION_STARTED
+2026/11/18 13:19:34 [RM 1] event=ELECTION_WON
+2026/11/18 13:19:34 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:19:34 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:19:35 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:19:43 [RM 1] event=BID_RECIEVED bid=10 bidder=Jacob
+2026/11/18 13:19:43 [RM 1] event=AUCTION_STARTED end=2026-11-18 13:20:33.9717438 +0100 CET m=+60.374197701
+2026/11/18 13:20:24 [RM 1] event=BID_RECIEVED bid=12 bidder=Lasse
+2026/11/18 13:20:28 [RM 1] event=BID_RECIEVED bid=13 bidder=Jacob
+2026/11/18 13:20:33 [RM 1] event=AUCTION_CLOSED winner=Jacob price=13
+2026/11/18 13:23:29 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:23:36 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/18 13:23:38 [RM 1] event=LEADER_TIMEOUT
+2026/11/18 13:23:38 [RM 1] event=ELECTION_STARTED
+2026/11/18 13:23:38 [RM 1] event=ELECTION_WON
+2026/11/18 13:23:44 [RM 1] event=BID_RECIEVED bid=100 bidder=Jacob
+2026/11/18 13:23:44 [RM 1] event=AUCTION_STARTED end=2026-11-18 13:24:34.7504422 +0100 CET m=+58.423802101
+2026/11/18 13:23:52 [RM 1] event=REPLICA_DEAD peer=127.0.0.1:8008
+2026/11/18 13:24:06 [RM 1] event=BID_RECIEVED bid=101 bidder=Lasse
+2026/11/18 13:24:09 [RM 1] event=BID_RECIEVED bid=101 bidder=Lasse
+2026/11/18 13:24:10 [RM 1] event=BID_RECIEVED bid=101 bidder=Lasse
+2026/11/18 13:24:34 [RM 1] event=AUCTION_CLOSED winner=Jacob price=100
+2026/11/18 13:26:58 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:26:58 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:26:59 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:26:59 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:28:30 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/18 13:28:32 [RM 1] event=LEADER_TIMEOUT
+2026/11/18 13:28:32 [RM 1] event=ELECTION_STARTED
+2026/11/18 13:28:32 [RM 1] event=ELECTION_WON
+2026/11/18 13:28:34 [RM 1] event=BID_RECIEVED bid=101 bidder=Lasse
+2026/11/18 13:28:34 [RM 1] event=AUCTION_STARTED end=2026-11-18 13:29:24.6757387 +0100 CET m=+54.505723901
+2026/11/18 13:28:39 [RM 1] event=BID_RECIEVED bid=102 bidder=Jacob
+2026/11/18 13:28:41 [RM 1] event=REPLICA_DEAD peer=127.0.0.1:8008
+2026/11/18 13:28:44 [RM 1] event=BID_RECIEVED bid=103 bidder=Lasse
+2026/11/18 13:28:58 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
+2026/11/18 13:31:41 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/18 13:31:41 [RM 1] event=NEW_LEADER leader=2
