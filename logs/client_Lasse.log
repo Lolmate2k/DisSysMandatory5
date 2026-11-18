@@ -3,3 +3,22 @@
 2026/11/18 13:20:24 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=1
 2026/11/18 13:20:32 [Client Lasse] event=BID_SEND amount=12 lamport=2
 2026/11/18 13:20:32 [Client Lasse] event=BID_REPLY msg="Your bid is lower than highest bid, which is: 13" lamport=2
+2026/11/18 13:24:04 [Client Lasse] event=CLIENT_START fe=%!s(int64=0) bank=1500
+2026/11/18 13:24:06 [Client Lasse] event=BID_SEND amount=101 lamport=1
+2026/11/18 13:24:06 [Client Lasse] event=BID_REPLY msg="Your bid was not accepted beacause of an internal server failure" lamport=1
+2026/11/18 13:24:09 [Client Lasse] event=BID_SEND amount=101 lamport=2
+2026/11/18 13:24:09 [Client Lasse] event=BID_REPLY msg="Your bid was not accepted beacause of an internal server failure" lamport=2
+2026/11/18 13:24:10 [Client Lasse] event=BID_SEND amount=101 lamport=3
+2026/11/18 13:24:10 [Client Lasse] event=BID_REPLY msg="Your bid was not accepted beacause of an internal server failure" lamport=3
+2026/11/18 13:25:15 [Client Lasse] event=BID_SEND amount=101 lamport=4
+2026/11/18 13:25:15 [Client Lasse] event=BID_REPLY msg="The auction is closed" lamport=4
+2026/11/18 13:28:34 [Client Lasse] event=BID_SEND amount=101 lamport=5
+2026/11/18 13:28:34 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=5
+2026/11/18 13:28:44 [Client Lasse] event=BID_SEND amount=103 lamport=6
+2026/11/18 13:28:44 [Client Lasse] event=BID_REPLY msg="Your bid was not accepted beacause of an internal server failure" lamport=6
+2026/11/18 13:31:46 [Client Lasse] event=BID_SEND amount=101 lamport=7
+2026/11/18 13:31:46 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=7
+2026/11/18 13:32:01 [Client Lasse] event=BID_SEND amount=105 lamport=8
+2026/11/18 13:32:01 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=8
+2026/11/18 13:32:17 [Client Lasse] event=BID_SEND amount=1001 lamport=9
+2026/11/18 13:32:17 [Client Lasse] event=BID_REPLY msg="Your bid was not accepted beacause of an internal server failure" lamport=9
