@@ -32,3 +32,14 @@
 2026/11/18 13:31:49 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=4
 2026/11/18 13:32:09 [Client Jacob] event=BID_SEND amount=1000 lamport=5
 2026/11/18 13:32:09 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=5
+2026/11/20 10:17:06 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000
+2026/11/20 10:17:14 [Client Jacob] event=BID_SEND amount=101 lamport=1
+2026/11/20 10:17:14 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/20 10:19:27 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000
+2026/11/20 10:19:34 [Client Jacob] event=BID_SEND amount=102 lamport=1
+2026/11/20 10:19:34 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/20 10:20:20 [Client Jacob] event=CLIENT_START fe=%!s(int64=0) bank=1000
+2026/11/20 10:20:22 [Client Jacob] event=BID_SEND amount=101 lamport=1
+2026/11/20 10:20:22 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/20 10:20:43 [Client Jacob] event=BID_SEND amount=105 lamport=2
+2026/11/20 10:20:43 [Client Jacob] event=BID_REPLY msg="Successfully bidded" lamport=2

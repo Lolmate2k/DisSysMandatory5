@@ -24,7 +24,7 @@ type BID struct {
 	bid    int64
 }
 
-type RM struct {
+type RM struct { // Replica Manager
 	pb.UnimplementedRMServer
 	replicas     map[string]pb.RMClient
 	deadReplicas map[string]pb.RMClient
@@ -407,15 +407,16 @@ func (n *RM) ReplicateToMajority(state *pb.CurrentState) bool {
 	for a, c := range n.replicas {
 		peers[a] = c
 	}
-	total := len(n.replicas) + 1
 	n.mu.Unlock()
-	needed := total/2 + 1
-	acks := 1
+
+	// No peers believed alive: the leader's own copy is the only one left
+	if len(peers) == 0 {
+		return true
+	}
 
 	results := make(chan bool, len(peers))
 
 	for addr, client := range peers {
-
 		go func(addr string, client pb.RMClient) {
 			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 			defer cancel()
@@ -423,26 +424,30 @@ func (n *RM) ReplicateToMajority(state *pb.CurrentState) bool {
 			_, err := client.UpdateReplicas(ctx, state)
 			if err != nil {
 				log.Printf("[RM %d] event=REPLICATE_FAILED peer=%s err=%v", n.id, addr, err)
+
+				// Mark the peer dead immediately instead of waiting for the next ping
+				n.mu.Lock()
+				if c, ok := n.replicas[addr]; ok {
+					delete(n.replicas, addr)
+					n.deadReplicas[addr] = c
+					log.Printf("[RM %d] event=REPLICA_DEAD peer=%s", n.id, addr)
+				}
+				n.mu.Unlock()
 			}
 			results <- (err == nil)
 		}(addr, client)
 	}
 
-	remaining := len(peers)
-	for remaining > 0 {
+	// Wait for every peer to either ack or fail
+	acks := 1 // the leader itself
+	for range peers {
 		if <-results {
 			acks++
 		}
-		remaining--
-
-		if acks >= needed {
-			return true // majority reached, don't wait for the rest
-		}
-		if acks+remaining < needed {
-			return false // majority can no longer be reached
-		}
 	}
-	return false
+
+	log.Printf("[RM %d] event=REPLICATION_DONE acks=%d peers=%d", n.id, acks, len(peers))
+	return true
 }
 
 func (n *RM) HeartBeatLoop() {

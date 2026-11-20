@@ -45,3 +45,23 @@
 2026/11/18 13:28:58 [RM 1] event=FE_NOTIFY_FALED err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:5000: connectex: No connection could be made because the target machine actively refused it."
 2026/11/18 13:31:41 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
 2026/11/18 13:31:41 [RM 1] event=NEW_LEADER leader=2
+2026/11/20 10:17:07 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/20 10:17:09 [RM 1] event=LEADER_TIMEOUT
+2026/11/20 10:17:09 [RM 1] event=ELECTION_STARTED
+2026/11/20 10:17:09 [RM 1] event=ELECTION_WON
+2026/11/20 10:17:10 [RM 1] event=REPLICA_DEAD peer=127.0.0.3:8008
+2026/11/20 10:17:11 [RM 1] event=BID_RECIEVED bid=100 bidder=Lasse
+2026/11/20 10:17:11 [RM 1] event=AUCTION_STARTED end=2026-11-20 10:18:01.2427475 +0100 CET m=+54.059507201
+2026/11/20 10:17:14 [RM 1] event=BID_RECIEVED bid=101 bidder=Jacob
+2026/11/20 10:19:27 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/20 10:19:30 [RM 1] event=LEADER_TIMEOUT
+2026/11/20 10:19:30 [RM 1] event=ELECTION_STARTED
+2026/11/20 10:19:30 [RM 1] event=ELECTION_WON
+2026/11/20 10:19:30 [RM 1] event=REPLICA_DEAD peer=127.0.0.3:8008
+2026/11/20 10:19:31 [RM 1] event=BID_RECIEVED bid=101 bidder=Lasse
+2026/11/20 10:19:31 [RM 1] event=REPLICATION_DONE acks=2 peers=1
+2026/11/20 10:19:31 [RM 1] event=AUCTION_STARTED end=2026-11-20 10:20:21.0875398 +0100 CET m=+53.112617901
+2026/11/20 10:19:34 [RM 1] event=BID_RECIEVED bid=102 bidder=Jacob
+2026/11/20 10:19:34 [RM 1] event=REPLICATION_DONE acks=2 peers=1
+2026/11/20 10:20:14 [RM 1] event=RM_START addr=127.0.0.2:8008 lamport=0
+2026/11/20 10:20:28 [RM 1] event=NEW_LEADER leader=2

@@ -22,3 +22,20 @@
 2026/11/18 13:32:01 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=8
 2026/11/18 13:32:17 [Client Lasse] event=BID_SEND amount=1001 lamport=9
 2026/11/18 13:32:17 [Client Lasse] event=BID_REPLY msg="Your bid was not accepted beacause of an internal server failure" lamport=9
+2026/11/20 10:17:08 [Client Lasse] event=CLIENT_START fe=%!s(int64=0) bank=1500
+2026/11/20 10:17:11 [Client Lasse] event=BID_SEND amount=100 lamport=1
+2026/11/20 10:17:11 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/20 10:17:22 [Client Lasse] event=BID_SEND amount=102 lamport=2
+2026/11/20 10:17:22 [Client Lasse] event=BID_REPLY msg="Your bid was not accepted beacause of an internal server failure" lamport=2
+2026/11/20 10:19:29 [Client Lasse] event=CLIENT_START fe=%!s(int64=0) bank=1500
+2026/11/20 10:19:31 [Client Lasse] event=BID_SEND amount=101 lamport=1
+2026/11/20 10:19:31 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/20 10:19:40 [Client Lasse] event=BID_SEND amount=103 lamport=2
+2026/11/20 10:19:40 [Client Lasse] event=BID_ERROR err=rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.2:8008: connectex: No connection could be made because the target machine actively refused it."
+2026/11/20 10:19:42 [Client Lasse] event=BID_SEND amount=103 lamport=3
+2026/11/20 10:19:42 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=3
+2026/11/20 10:20:34 [Client Lasse] event=CLIENT_START fe=%!s(int64=0) bank=1500
+2026/11/20 10:20:36 [Client Lasse] event=BID_SEND amount=103 lamport=1
+2026/11/20 10:20:36 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=1
+2026/11/20 10:20:50 [Client Lasse] event=BID_SEND amount=106 lamport=2
+2026/11/20 10:20:50 [Client Lasse] event=BID_REPLY msg="Successfully bidded" lamport=2

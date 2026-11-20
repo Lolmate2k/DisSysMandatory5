@@ -104,7 +104,7 @@ func (c *AuctionClient) CommandLoop() {
 
 func (c *AuctionClient) Bid(amount int64) {
 	if amount > c.bank {
-		fmt.Println("You only have: %d", c.bank)
+		fmt.Printf("You only have: %d\n", c.bank)
 		return
 	}
 
